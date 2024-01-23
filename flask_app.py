@@ -1,3 +1,4 @@
+# импортируем нужные библиотеки
 from flask import Flask
 from flask import render_template, request, redirect, url_for
 from sqlalchemy import func
@@ -6,11 +7,13 @@ import matplotlib.pyplot as plt
 import matplotlib
 matplotlib.use('agg')
 
+# создаем приложение и базу данных, где все будет храниться
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 db = SQLAlchemy(app)
 
 
+# класс пользотвателя, добавляем в бд информацию из анкеты
 class User(db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
@@ -23,6 +26,7 @@ class User(db.Model):
     languages = db.Column(db.Text)
 
 
+# класс с ответами, добавлям в бд информацию из анкеты
 class Answers(db.Model):
     __tablename__ = 'answers'
     id = db.Column(db.Integer, primary_key=True)
@@ -39,24 +43,30 @@ class Answers(db.Model):
     ans11 = db.Column(db.Text)
 
 
+# создаем все таблички в бд
 with app.app_context():
     db.create_all()
 
 
+# выводим главную страницу
 @app.route('/')
 def main_page():
     return render_template('main_page.html')
 
 
+# выводим страницу с опросами
 @app.route('/questionnaire')
 def questionnaire():
     return render_template('questionnaire.html')
 
 
+# на этой странице мы показываем введенные пользователем ответы и сохраняем их в бд
+# на эту страницу нельзя попасть, есть ты не прошел опрос
 @app.route('/process')
 def process():
     if not request.args:
         return redirect(url_for('questionnaire'))
+    # получаем информацию из анкеты
     gender = request.args.get('gender')
     job = request.args.get('profession')
     age = request.args.get('age')
@@ -64,6 +74,7 @@ def process():
     cur_city = request.args.get('currenttown')
     curtown_long = request.args.get('curtow')
     languages = request.args.get('languages')
+    # добавляем информацию о пользователе в бд
     user = User(
         gender=gender,
         job=job,
@@ -76,6 +87,7 @@ def process():
     db.session.add(user)
     db.session.commit()
     db.session.refresh(user)
+    # получаем информацию об ответах на лингвистические вопросы
     ans1 = request.args.get('cotcheese')
     ans2 = request.args.get('beet')
     ans3 = request.args.get('turnon')
@@ -87,6 +99,7 @@ def process():
     ans9 = request.args.get('obl')
     ans10 = request.args.get('shoe')
     ans11 = request.args.get('dancer')
+    # здесь хранятся все данные, введенные пользователем
     info = {
         'gender': gender,
         'job': job,
@@ -107,6 +120,7 @@ def process():
         'ans10': ans10,
         'ans11': ans11
     }
+    # добавляем ответы в бд
     answer = Answers(
         id=user.id,
         ans1=ans1,
@@ -126,42 +140,55 @@ def process():
     return render_template('process.html', info=info)
 
 
+# на странице со статистикой строим графики и выводим прочие данные
 @app.route('/statistics')
 def statistics():
+    # в этом словаре будет вся информация, которую будем анализировать (из бд)
     all_info = {}
+    # здесь статистика по возрасту: средний, минимальный и максимальный
     age_stats = db.session.query(
         func.avg(User.age),
         func.min(User.age),
         func.max(User.age)
     ).one()
+    # добавляем в словарь информацию про возраст
     all_info['age_mean'] = age_stats[0]
     all_info['age_min'] = age_stats[1]
     all_info['age_max'] = age_stats[2]
+    # сколько всего прошло опрос
     all_info['total_count'] = User.query.count()
+    # сколько прошло женщин
     all_info['females'] = dict(db.session.query(
         User.gender, func.count(User.gender)).group_by(User.gender).all()
                                )['Женщина']
+    # сколько мужчин
     all_info['males'] = dict(db.session.query(
         User.gender, func.count(User.gender)).group_by(User.gender).all()
                              )['Мужчина']
+    # какая у кого профессия
     all_info['jobs'] = dict(db.session.query(
         User.job, func.count(User.job)).group_by(User.job).all())
+    # если есть нулевое значение, удаляем его (то же самое с другими дальше)
     if None in all_info['jobs'].keys():
         del all_info['jobs'][None]
+    # родной город
     all_info['hometowns'] = dict(db.session.query(
         User.hometown, func.count(User.hometown)).group_by(User.hometown).all())
     if None in all_info['hometowns'].keys():
         del all_info['hometowns'][None]
+    # текущее место жительства
     all_info['curcity'] = dict(db.session.query(
         User.cur_city, func.count(User.cur_city)
     ).group_by(User.cur_city).all())
     if None in all_info['curcity'].keys():
         del all_info['curcity'][None]
+    # возраст
     all_info['ages'] = dict(db.session.query(
         User.age, func.count(User.age)
     ).group_by(User.age).all())
     if None in all_info['ages'].keys():
         del all_info['ages'][None]
+    # языки, обрабатываем строку языков, написанных через запятую, приводим к одному виду
     all_languages = db.session.query(User.languages).all()
     all_langs = {}
     for lang in all_languages:
@@ -181,10 +208,12 @@ def statistics():
     all_info['languages'] = all_langs
     if None in all_info['languages'].keys():
         del all_info['languages'][None]
+    # дальше лингвистические ответы на вопросы, все одинаковые
     all_info['Творог'] = dict(
         db.session.query(Answers.ans1, func.count(Answers.ans1)).group_by(Answers.ans1).all())
     if None in all_info['Творог'].keys():
         del all_info['Творог'][None]
+    # если какого-то варианта не было в словаре, присваиваем ему 0 (иначе график не построится)
     if 'твОрог' not in all_info['Творог'].keys():
         all_info['Творог']['твОрог'] = 0
     if 'творОг' not in all_info['Творог'].keys():
@@ -270,6 +299,7 @@ def statistics():
     if 'танцовщИца' not in all_info['Танцовщица'].keys():
         all_info['Танцовщица']['танцовщИца'] = 0
 
+    # график распределения мужчин и женщин (pie chart)
     labels = ['Женщины', 'Мужчины']
     counts = [all_info['females'], all_info['males']]
     fig, ax = plt.subplots()
@@ -279,6 +309,7 @@ def statistics():
     plt.clf()
     plt.close()
 
+    # график профессий (bar chart)
     jobs = all_info['jobs'].keys()
     numbers = all_info['jobs'].values()
     plt.bar(jobs, numbers, color='#FF7F50')
@@ -289,6 +320,7 @@ def statistics():
     plt.clf()
     plt.close()
 
+    # график возрастов (bar chart)
     ages = all_info['ages'].keys()
     nums = all_info['ages'].values()
     plt.bar(ages, nums, color='#FF7F50')
@@ -299,6 +331,7 @@ def statistics():
     plt.clf()
     plt.close()
 
+    # график языков (bar chart)
     langs = all_info['languages'].keys()
     numbs = all_info['languages'].values()
     plt.bar(langs, numbs, color='#DE3163')
@@ -309,6 +342,7 @@ def statistics():
     plt.clf()
     plt.close()
 
+    # график родных городов (bar chart)
     hometowns = all_info['hometowns'].keys()
     nus = all_info['hometowns'].values()
     plt.bar(hometowns, nus, color='#FF7F50')
@@ -319,6 +353,7 @@ def statistics():
     plt.clf()
     plt.close()
 
+    # график текущих городов (bar chart)
     curcity = all_info['curcity'].keys()
     nu = all_info['curcity'].values()
     plt.bar(curcity, nu, color='#DE3163')
@@ -329,6 +364,7 @@ def statistics():
     plt.clf()
     plt.close()
 
+    # дальше pie charts для каждого слова с двумя вариантами ударения
     labels = ['твОрог', 'творОг']
     counts = [all_info['Творог']['твОрог'], all_info['Творог']['творОг']]
     fig, ax = plt.subplots()
