@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} {% endblock %}</title>
+         <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+    <!-- Option 2: jQuery, Popper.js, and Bootstrap JS-->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+</head>
+<style>
+body {
+  background-color: White;
+}
+h1 {
+  text-align: center;
+}
+p {
+  font-family: serif;
+  font-size: 18px;
+  background-color: Linen;
+  padding: 5px 5px;
+  border-radius: 30px;
+}
+form {
+  padding: 5px 5px;
+  font-family: serif;
+  font-size: 18px;
+}
+.navbar-brand {
+  background-color: #f2d9bf;
+  font-family: serif;
+  font-size: 25px;
+  padding: 10px 12px;
+}
+.nav-link {
+  font-family: serif;
+  font-size: 20px;
+  padding: 10px 12px;
+}
+.navbar{
+  background-color: #f6e6d5 !important;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+</style>
+<body>
+    <!-- https://getbootstrap.com/docs/4.5/components/navbar/ -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-link" href="/">Главная страница</a>
+      </div>
+      <a class="navbar-brand" href="#"><b>Анкета</b></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup1">
+        <div class="navbar-nav">
+          <a class="nav-link" href="/statistics">Статистика</a>
+        </div>
+      </div> </div>
+    </nav>
+
+<div class="container" style="margin: 50px 10%; padding-top: 50px">
+    <article style="background-color: Linen; padding: 10px 12px; border-radius: 30px;">
+    <p>
+      <b> Спасибо за ваш ответ!</b> <br>
+    </p>
+    </article>
+    <article> <br> </article>
+    <article style="background-color: Linen; padding: 10px 12px; border-radius: 30px;">
+        <p>
+          Вот вся информация, которую вы указали в анкете. <br>
+          Пол: {{ info['gender'] }} <br>
+          Возраст: {{ info['age'] }} <br>
+          Город, где вы родились: {{ info['hometown'] }} <br>
+          Город, где живете сейчас: {{ info['cur_city'] }} <br>
+          В этом городе вы живете: {{ info['curtown_long'] }} <br>
+          Ваша профессия: {{ info['job'] }} <br>
+          Языки, которые вы изучаете: {{ info['languages'] }} <br>
+          {{ info['ans1'] }} <br>
+          {{ info['ans2'] }} <br>
+          {{ info['ans3'] }} <br>
+          {{ info['ans4'] }} <br>
+          {{ info['ans5'] }} <br>
+          {{ info['ans6'] }} <br>
+          {{ info['ans7'] }} <br>
+          {{ info['ans8'] }} <br>
+          {{ info['ans9'] }} <br>
+          {{ info['ans10'] }} <br>
+          {{ info['ans11'] }} <br>
+          <form action="/statistics">
+            <input type="submit" value="Посмотреть статистику!">
+          </form>
+        </p>
+    </article>
+</div>
+
+</body>
+</html>

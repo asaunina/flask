@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} {% endblock %}</title>
+         <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+    <!-- Option 2: jQuery, Popper.js, and Bootstrap JS-->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+</head>
+<style>
+body {
+  background-color: White;
+}
+h1 {
+  text-align: center;
+}
+p {
+  font-family: serif;
+  font-size: 18px;
+  background-color: Linen;
+  padding: 10px 12px;
+  border-radius: 30px;
+}
+form {
+  padding: 5px 5px;
+  font-family: serif;
+  font-size: 18px;
+}
+img {
+  width: 500px;
+}
+.navbar-brand {
+  background-color: #f2d9bf;
+  font-family: serif;
+  font-size: 25px;
+  padding: 10px 12px;
+}
+.nav-link { 
+  font-family: serif;
+  font-size: 20px;
+  padding: 10px 12px;
+}
+.navbar{
+  background-color: #f6e6d5 !important;
+  position: fixed;
+  top: 0;
+  z-index:1;
+  width: 100%;
+}
+</style>
+<body>
+    <!-- https://getbootstrap.com/docs/4.5/components/navbar/ -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-link" href="/">Главная страница</a>
+          <a class="nav-link" href="/questionnaire">Анкета</a>
+          <a class="navbar-brand" href="#"><b>Статистика</b></a>
+        </div>
+      </div>
+    </nav>
+
+<div class="container" style="margin: 50px 10%; padding-top: 50px">
+    <div class="row">
+        <div class="col">
+            <article style="background-color: Linen; padding: 10px 12px; border-radius: 30px;">
+                <p> <b>Количество человек</b>, прошедших опрос: {{ all_info['total_count'] }} <br>
+                <b> Женщин</b>: {{ all_info['females']}} <br>
+                <b> Мужчин</b>: {{ all_info['males']}}</p>
+            </article>
+            <article> <br> </article>
+        </div>
+        <div class="col">
+            <article style="background-color: Linen; padding: 10px 12px; border-radius: 30px;">
+                <p>
+                <b>Средний возраст</b>: {{ all_info['age_mean'] }} <br>
+                <b>Минимальный возраст</b>: {{ all_info['age_min'] }} <br>
+                <b>Максимальный возраст</b>: {{ all_info['age_max'] }} </p>
+            </article>
+            <article> <br> </article>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <article style="background-color: Linen; padding: 10px 12px; border-radius: 30px">
+                <img src="{{ url_for('static', filename='images/genders.png') }}" alt="Картинка" />
+            </article>
+            <article> <br> </article>
+        </div>
+        <div class="col">
+            <article style="background-color: Linen; padding: 10px 12px; border-radius: 30px">
+                <img src="{{ url_for('static', filename='images/jobs.png') }}" alt="Картинка" />
+            </article>
+            <article> <br> </article>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <article style="background-color: Linen; padding: 10px 12px; border-radius: 30px">
+                <img src="{{ url_for('static', filename='images/languages.png') }}" alt="Картинка" />
+            </article>
+            <article> <br> </article>
+        </div>
+        <div class="col">
+            <article style="background-color: Linen; padding: 10px 12px; border-radius: 30px">
+                <img src="{{ url_for('static', filename='images/ages.png') }}" alt="Картинка" />
+            </article>
+            <article> <br> </article>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <article style="background-color: Linen; padding: 10px 12px; border-radius: 30px">
+                <img src="{{ url_for('static', filename='images/hometowns.png') }}" alt="Картинка" />
+            </article>
+            <article> <br> </article>
+        </div>
+        <div class="col">
+            <article style="background-color: Linen; padding: 10px 12px; border-radius: 30px">
+                <img src="{{ url_for('static', filename='images/curcity.png') }}" alt="Картинка" />
+            </article>
+            <article> <br> </article>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <article style="background-color: Linen; padding: 10px 12px; border-radius: 30px">
+                <img src="{{ url_for('static', filename='images/cotcheese.png') }}" alt="Картинка" />
+            </article>
+            <article> <br> </article>
+        </div>
+        <div class="col">
+            <article style="background-color: Linen; padding: 10px 12px; border-radius: 30px">
+                <img src="{{ url_for('static', filename='images/beet.png') }}" alt="Картинка" />
+            </article>
+            <article> <br> </article>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <article style="background-color: Linen; padding: 10px 12px; border-radius: 30px">
+                <img src="{{ url_for('static', filename='images/turnon.png') }}" alt="Картинка" />
+            </article>
+            <article> <br> </article>
+        </div>
+        <div class="col">
+            <article style="background-color: Linen; padding: 10px 12px; border-radius: 30px">
+                <img src="{{ url_for('static', filename='images/disp.png') }}" alt="Картинка" />
+            </article>
+            <article> <br> </article>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <article style="background-color: Linen; padding: 10px 12px; border-radius: 30px">
+                <img src="{{ url_for('static', filename='images/blind.png') }}" alt="Картинка" />
+            </article>
+            <article> <br> </article>
+        </div>
+        <div class="col">
+            <article style="background-color: Linen; padding: 10px 12px; border-radius: 30px">
+                <img src="{{ url_for('static', filename='images/sorrel.png') }}" alt="Картинка" />
+            </article>
+            <article> <br> </article>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <article style="background-color: Linen; padding: 10px 12px; border-radius: 30px">
+                <img src="{{ url_for('static', filename='images/catalogue.png') }}" alt="Картинка" />
+            </article>
+            <article> <br> </article>
+        </div>
+        <div class="col">
+            <article style="background-color: Linen; padding: 10px 12px; border-radius: 30px">
+                <img src="{{ url_for('static', filename='images/graph.png') }}" alt="Картинка" />
+            </article>
+            <article> <br> </article>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <article style="background-color: Linen; padding: 10px 12px; border-radius: 30px">
+                <img src="{{ url_for('static', filename='images/obl.png') }}" alt="Картинка" />
+            </article>
+            <article> <br> </article>
+        </div>
+        <div class="col">
+            <article style="background-color: Linen; padding: 10px 12px; border-radius: 30px">
+                <img src="{{ url_for('static', filename='images/shoe.png') }}" alt="Картинка" />
+            </article>
+            <article> <br> </article>
+        </div>
+    </div>
+    <div class="row" style="justify-content: center;">
+        <article style="background-color: Linen; padding: 10px 12px; border-radius: 30px; allign: center">
+            <img src="{{ url_for('static', filename='images/dancer.png') }}" alt="Картинка" />
+        </article>
+        <article> <br> </article>
+    </div>
+</div>
+
+</body>
+</html>

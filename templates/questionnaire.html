@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} {% endblock %}</title>
+         <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+    <!-- Option 2: jQuery, Popper.js, and Bootstrap JS-->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+</head>
+<style>
+body {
+  background-color: White;
+}
+h1 {
+  text-align: center;
+}
+p {
+  font-family: serif;
+  font-size: 18px;
+  background-color: Linen;
+  padding: 5px 5px;
+  border-radius: 30px;
+}
+form {
+  padding: 5px 5px;
+  font-family: serif;
+  font-size: 18px;
+}
+.navbar-brand {
+  background-color: #f2d9bf;
+  font-family: serif;
+  font-size: 25px;
+  padding: 10px 12px;
+}
+.nav-link { 
+  font-family: serif;
+  font-size: 20px;
+  padding: 10px 12px;
+}
+.navbar{
+  background-color: #f6e6d5 !important;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+</style>
+<body>
+    <!-- https://getbootstrap.com/docs/4.5/components/navbar/ -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-link" href="/">Главная страница</a>
+      </div>
+      <a class="navbar-brand" href="#"><b>Анкета</b></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup1">
+        <div class="navbar-nav">
+          <a class="nav-link" href="/statistics">Статистика</a>
+        </div>
+      </div> </div>
+    </nav>
+
+
+<div class="container" style="margin: 50px 10%; padding-top: 50px">
+  <form action="/process" method="GET">
+  <article style="background-color: Linen; padding: 10px 12px; border-radius: 30px;">
+    <p> 1. Укажите ваш пол. </p>
+      <input type="radio" name="gender" value="Мужчина"> Мужчина <br>
+      <input type="radio" name="gender" value="Женщина"> Женщина <br>
+  </article>
+  <article> <br> </article>
+  <article style="background-color: Linen; padding: 10px 12px; border-radius: 30px;">
+    <p> 2. Укажите ваш возраст числом. </p>
+      <input type="text" name="age">
+  </article>
+  <article> <br> </article>
+  <article style="background-color: Linen; padding: 10px 12px; border-radius: 30px;">
+    <p> 3. Укажите город, где вы родились. </p>
+      <input type="text" name="hometown"><br>
+  </article>
+  <article> <br> </article>
+  <article style="background-color: Linen; padding: 10px 12px; border-radius: 30px;">
+    <p> 4. Укажите город, где вы живете сейчас. </p>
+      <input type="text" name="currenttown"><br>
+  </article>
+  <article> <br> </article>
+  <article style="background-color: Linen; padding: 10px 12px; border-radius: 30px;">
+    <p> 5. Как давно вы живете в этом городе? </p>
+      <input type="radio" name="curtow" value="Меньше 1 года"> Меньше 1 года <br>
+      <input type="radio" name="curtow" value="От 1 до 5 лет"> От 1 до 5 лет <br>
+      <input type="radio" name="curtow" value="От 5 до 10 лет"> От 5 до 10 лет <br>
+      <input type="radio" name="curtow" value="Более 10 лет"> Более 10 лет <br>
+  </article>
+  <article> <br> </article>
+  <article style="background-color: Linen; padding: 10px 12px; border-radius: 30px;">
+    <p> 6. Укажите вашу профессию. Если вы еще учитесь, укажите, студент вы или школьник. </p>
+      <input type="text" name="profession"> <br>
+  </article>
+  <article> <br> </article>
+  <article style="background-color: Linen; padding: 10px 12px; border-radius: 30px;">
+    <p> 7. Перечислите через запятую все языки, которые вы знаете или изучали. </p>
+      <input type="text" name="languages"> <br>
+  </article>
+  <article> <br> </article>
+  <article style="background-color: Linen; padding: 10px 12px; border-radius: 30px;">
+    <p> Теперь вопросы про ударение! </p>
+  </article>
+  <article> <br> </article>
+  <article style="background-color: Linen; padding: 10px 12px; border-radius: 30px;">
+    <p> 8. Поставьте ударение в слове <b><i>творог</i></b>. </p>
+      <input type="radio" name="cotcheese" value="твОрог"> твОрог <br>
+      <input type="radio" name="cotcheese" value="творОг"> творОг <br>
+  </article>
+  <article> <br> </article>
+  <article style="background-color: Linen; padding: 10px 12px; border-radius: 30px;">
+    <p> 9. Поставьте ударение в слове <b><i>свекла</i></b>. </p>
+      <input type="radio" name="beet" value="свЕкла"> свЕкла <br>
+      <input type="radio" name="beet" value="свеклА"> свеклА <br>
+  </article>
+  <article> <br> </article>
+  <article style="background-color: Linen; padding: 10px 12px; border-radius: 30px;">
+    <p> 10. Поставьте ударение в слове <b><i>включит</i></b>. </p>
+      <input type="radio" name="turnon" value="вклЮчит"> вклЮчит <br>
+      <input type="radio" name="turnon" value="включИт"> включИт <br>
+  </article>
+  <article> <br> </article>
+  <article style="background-color: Linen; padding: 10px 12px; border-radius: 30px;">
+    <p> 11. Поставьте ударение в слове <b><i>диспансер</i></b>. </p>
+      <input type="radio" name="disp" value="диспАнсер"> диспАнсер <br>
+      <input type="radio" name="disp" value="диспансЕр"> диспансЕр <br>
+  </article>
+  <article> <br> </article>
+  <article style="background-color: Linen; padding: 10px 12px; border-radius: 30px;">
+    <p> 12. Поставьте ударение в слове <b><i>жалюзи</i></b>. </p>
+      <input type="radio" name="blind" value="жАлюзи"> жАлюзи <br>
+      <input type="radio" name="blind" value="жалюзИ"> жалюзИ <br>
+  </article>
+  <article> <br> </article>
+  <article style="background-color: Linen; padding: 10px 12px; border-radius: 30px;">
+    <p> 13. Поставьте ударение в слове <b><i>щавель</i></b>. </p>
+      <input type="radio" name="sorrel" value="щАвель"> щАвель <br>
+      <input type="radio" name="sorrel" value="щавЕль"> щавЕль <br>
+  </article>
+  <article> <br> </article>
+  <article style="background-color: Linen; padding: 10px 12px; border-radius: 30px;">
+    <p> 14. Поставьте ударение в слове <b><i>каталог</i></b>. </p>
+      <input type="radio" name="catalogue" value="катАлог"> катАлог <br>
+      <input type="radio" name="catalogue" value="каталОг"> каталОг <br>
+  </article>
+  <article> <br> </article>
+  <article style="background-color: Linen; padding: 10px 12px; border-radius: 30px;">
+    <p> 15. Поставьте ударение в слове <b><i>граффити</i></b>. </p>
+      <input type="radio" name="graph" value="грАффити"> грАффити <br>
+      <input type="radio" name="graph" value="граффИти"> граффИти <br>
+  </article>
+  <article> <br> </article>
+  <article style="background-color: Linen; padding: 10px 12px; border-radius: 30px;">
+    <p> 16. Поставьте ударение в слове <b><i>облегчить</i></b>. </p>
+      <input type="radio" name="obl" value="облЕгчить"> облЕгчить <br>
+      <input type="radio" name="obl" value="облегчИть"> облегчИть <br>
+  </article>
+  <article> <br> </article>
+  <article style="background-color: Linen; padding: 10px 12px; border-radius: 30px;">
+    <p> 17. Поставьте ударение в слове <b><i>туфля</i></b>. </p>
+      <input type="radio" name="shoe" value="тУфля"> тУфля <br>
+      <input type="radio" name="shoe" value="туфлЯ"> туфлЯ <br>
+  </article>
+  <article> <br> </article>
+  <article style="background-color: Linen; padding: 10px 12px; border-radius: 30px;">
+    <p> 18. Поставьте ударение в слове <b><i>танцовщица</i></b>. </p>
+      <input type="radio" name="dancer" value="танцОвщица"> танцОвщица <br>
+      <input type="radio" name="dancer" value="танцовщИца"> танцовщИца <br>
+  </article>
+  <article> <br> </article>
+  <article style="background-color: Linen; padding: 10px 12px; border-radius: 30px;">
+    <p> Когда будете готовы, отправьте результаты, нажав на кнопку ниже! </p>
+      <input type="submit" value="Отправить"> <br>
+  </article>
+  </form>
+</div>
+</body>
+</html>
